@@ -1,26 +1,45 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from "react";
+import { ShoppingCartContext } from "./ShoppingCart/Context";
+import { ProductsGrid } from "./ShoppingCart/ProductsGrid";
+import { ShoppingCart } from "./ShoppingCart/ShoppingCart";
+import { ProductType } from "./ShoppingCart/types";
+import "./App.css";
 
-function App() {
+export default function App() {
+  const [shoppingCartItems, setShoppingCartItems] = useState<ProductType[]>([]);
+  const [productsData, setProductsData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    async function getData() {
+      try {
+        const response = await fetch("https://dummyjson.com/products");
+        if (!response.ok) {
+          console.warn(`Response is not valid ${response.status}`);
+        }
+        const data = await response.json();
+        setProductsData(data);
+      } catch {
+        setError(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    getData();
+  }, []);
+
+  if (loading) return <>...Loading</>;
+  if (error) return <>{error}</>;
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ShoppingCartContext.Provider
+        value={{ shoppingCartItems, setShoppingCartItems }}
+      >
+        <ProductsGrid productsData={productsData} />
+        <ShoppingCart />
+      </ShoppingCartContext.Provider>
     </div>
   );
 }
-
-export default App;
