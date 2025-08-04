@@ -5,8 +5,6 @@ import { ProductType } from "./types";
 export const ProductsGrid = ({ productsData }) => {
   const { setShoppingCartItems, shoppingCartItems } = useShoppingCartContext();
 
-  console.log("ProductsGrid");
-
   return (
     <div className="productsContainer">
       {productsData &&

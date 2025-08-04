@@ -1,40 +1,15 @@
 import { memo } from "react";
 import { ProductCardType } from "./types";
+import { IncrementComponent } from "./IncrementComponent";
 
 export const ProductCard = memo(
   ({
     product,
-    setShoppingCartItems,
-    // productInBasket,
+
     productQuantity,
   }: ProductCardType) => {
     const { title, description, thumbnail, category, availabilityStatus } =
       product;
-
-    const handleAddToBasket = (currentProduct) => {
-      setShoppingCartItems((prevBasketItems) => {
-        return {
-          ...prevBasketItems,
-          [currentProduct.id]: {
-            ...currentProduct,
-            qty: prevBasketItems[currentProduct.id]
-              ? prevBasketItems[currentProduct.id].qty + 1
-              : 1,
-          },
-        };
-      });
-    };
-
-    const handleDelete = (currentProduct) =>
-      setShoppingCartItems((prevBasketItems) => {
-        return {
-          ...prevBasketItems,
-          [currentProduct.id]: {
-            ...currentProduct,
-            qty: prevBasketItems[currentProduct.id].qty - 1,
-          },
-        };
-      });
 
     return (
       <div className="productCard">
@@ -43,20 +18,12 @@ export const ProductCard = memo(
           <div>{description}</div>
           <div>{category}</div>
           <div>{availabilityStatus}</div>
-          <div>
-            {productQuantity > 0 ? (
-              <>
-                <button onClick={() => handleDelete(product)}>+</button>
-                {productQuantity}
-                <button onClick={() => handleAddToBasket(product)}>+</button>
-              </>
-            ) : (
-              <button onClick={() => handleAddToBasket(product)}>
-                Add to Cart
-              </button>
-            )}
-          </div>
+          <IncrementComponent
+            product={product}
+            productQuantity={productQuantity}
+          />
         </div>
+
         <img src={thumbnail} />
       </div>
     );

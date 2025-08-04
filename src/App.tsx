@@ -5,6 +5,10 @@ import { ShoppingCart } from "./ShoppingCart/ShoppingCart";
 import { ProductType } from "./ShoppingCart/types";
 import "./App.css";
 
+//TODO: Make Basket Modal
+//TODO: CSS to make look more like Eccomerce webstie
+//TODO: Redux or Zustand to manage state
+
 export default function App() {
   const [shoppingCartItems, setShoppingCartItems] = useState<ProductType[]>([]);
   const [productsData, setProductsData] = useState(null);
@@ -29,7 +33,6 @@ export default function App() {
     getData();
   }, []);
 
-  if (loading) return <>...Loading</>;
   if (error) return <>{error}</>;
 
   return (
@@ -37,7 +40,12 @@ export default function App() {
       <ShoppingCartContext.Provider
         value={{ shoppingCartItems, setShoppingCartItems }}
       >
-        <ProductsGrid productsData={productsData} />
+        <h2>Product Items</h2>
+        {loading ? (
+          <>...Loading Product Items</>
+        ) : (
+          <ProductsGrid productsData={productsData} />
+        )}
         <ShoppingCart />
       </ShoppingCartContext.Provider>
     </div>

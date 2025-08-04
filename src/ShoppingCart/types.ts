@@ -18,3 +18,8 @@ export interface ProductCardType {
   setShoppingCartItems: (product) => void;
   productQuantity: number;
 }
+
+export interface IncrementComponentTypes {
+  productQuantity: number;
+  product;
+}

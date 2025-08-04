@@ -1,5 +1,6 @@
 import { useShoppingCartContext } from "./Context";
 import { ProductType } from "./types";
+import { IncrementComponent } from "./IncrementComponent";
 
 export const ShoppingCart = () => {
   const onHandleClearBasket = () => handleClearBasket();
@@ -18,8 +19,8 @@ export const ShoppingCart = () => {
           <div key={id}>
             <h2>{title}</h2>
             <div>{description}</div>
-            <div>Quantity:{qty}</div>
             <img src={thumbnail} />
+            <IncrementComponent product={product} productQuantity={qty} />
           </div>
         );
       })}
