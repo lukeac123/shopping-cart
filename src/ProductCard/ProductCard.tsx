@@ -1,6 +1,7 @@
 import { memo } from "react";
-import { ProductCardType } from "./types";
-import { IncrementComponent } from "./IncrementComponent";
+import { ProductCardType } from "../types";
+import { IncrementComponent } from "../IncrementComponent/IncrementComponent";
+import "./ProductCard.css";
 
 export const ProductCard = memo(
   ({
@@ -13,7 +14,8 @@ export const ProductCard = memo(
 
     return (
       <div className="productCard">
-        <div className="productCardData">
+        <div className="productCardContent">
+          <img src={thumbnail} className="productCardImage" />
           <h2>{title}</h2>
           <div>{description}</div>
           <div>{category}</div>
@@ -23,8 +25,6 @@ export const ProductCard = memo(
             productQuantity={productQuantity}
           />
         </div>
-
-        <img src={thumbnail} />
       </div>
     );
   }

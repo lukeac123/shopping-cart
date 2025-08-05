@@ -1,5 +1,7 @@
-import { IncrementComponentTypes } from "./types";
-import { useShoppingCartContext } from "./Context";
+import { IncrementComponentTypes } from "../types";
+import { useShoppingCartContext } from "../Context";
+import { IconShoppingBagPlus, IconShoppingBagMinus } from "@tabler/icons-react";
+import "./IncrementComponent.css";
 
 export const IncrementComponent = ({
   productQuantity,
@@ -33,25 +35,30 @@ export const IncrementComponent = ({
     });
 
   return (
-    <div>
+    <div className="incrementComponent">
       {productQuantity > 0 ? (
         <>
           <button
-            aria-label="decrement quantity"
+            aria-label={`decrement ${product.title} quantity`}
             onClick={() => handleDelete(product)}
           >
-            -
+            <IconShoppingBagMinus />
           </button>
-          {productQuantity}
+          <div tabIndex={0}>{productQuantity}</div>
           <button
-            aria-label="increment quantity"
+            aria-label={`decrement ${product.title} quantity`}
             onClick={() => handleIncrement(product)}
           >
-            +
+            <IconShoppingBagPlus />
           </button>
         </>
       ) : (
-        <button onClick={() => handleIncrement(product)}>Add to Cart</button>
+        <button
+          aria-label={`add ${product.title} to shopping cart`}
+          onClick={() => handleIncrement(product)}
+        >
+          Add to Cart
+        </button>
       )}
     </div>
   );

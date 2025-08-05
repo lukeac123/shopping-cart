@@ -1,0 +1,9 @@
+:popover-open {
+    width: 500px;
+    height: 80vh;
+    position: absolute;
+    inset: unset;
+    top: 60px;
+    right: 10px;
+    padding: 10px
+  }

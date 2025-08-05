@@ -1,6 +1,8 @@
-import { useShoppingCartContext } from "./Context";
-import { ProductType } from "./types";
-import { IncrementComponent } from "./IncrementComponent";
+import { useShoppingCartContext } from "../Context";
+import { ProductType } from "../types";
+import { IncrementComponent } from "../IncrementComponent/IncrementComponent";
+import "./ShoppingCart.css";
+import { IconSquareX } from "@tabler/icons-react";
 
 export const ShoppingCart = () => {
   const onHandleClearBasket = () => handleClearBasket();
@@ -10,7 +12,10 @@ export const ShoppingCart = () => {
   const handleClearBasket = () => setShoppingCartItems([]);
 
   return (
-    <div className="shoppingCart">
+    <div id="shoppingCartPopover" className="shoppingCart" popover="auto">
+      <button popoverTarget="shoppingCartPopover" popoverTargetAction="hide">
+        <IconSquareX />
+      </button>
       <h2>Shopping Cart</h2>
       {Object.values(shoppingCartItems).map((product: ProductType) => {
         const { title, description, thumbnail, qty, id } = product;

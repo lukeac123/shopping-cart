@@ -1,8 +1,9 @@
-import { useShoppingCartContext } from "./Context";
-import { ProductCard } from "./ProductCard";
-import { ProductType } from "./types";
+import { useShoppingCartContext } from "../Context";
+import { ProductCard } from "../ProductCard";
+import { ProductType } from "../types";
+import "./ProductGrid.css";
 
-export const ProductsGrid = ({ productsData }) => {
+export const ProductGrid = ({ productsData }) => {
   const { setShoppingCartItems, shoppingCartItems } = useShoppingCartContext();
 
   return (

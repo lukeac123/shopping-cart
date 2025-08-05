@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
-import { ShoppingCartContext } from "./ShoppingCart/Context";
-import { ProductsGrid } from "./ShoppingCart/ProductsGrid";
-import { ShoppingCart } from "./ShoppingCart/ShoppingCart";
-import { ProductType } from "./ShoppingCart/types";
+import { ShoppingCartContext } from "./Context";
+import { ProductGrid } from "./ProductGrid/ProductGrid";
+import { ShoppingCart } from "./ShoppingCart";
+import { ProductType } from "./types";
 import "./App.css";
+import { Appeader } from "./AppHeader";
 
-//TODO: Make Basket Modal
-//TODO: CSS to make look more like Eccomerce webstie
 //TODO: Redux or Zustand to manage state
+//TODO: Add search or filtering
 
 export default function App() {
   const [shoppingCartItems, setShoppingCartItems] = useState<ProductType[]>([]);
@@ -36,18 +36,18 @@ export default function App() {
   if (error) return <>{error}</>;
 
   return (
-    <div className="App">
-      <ShoppingCartContext.Provider
-        value={{ shoppingCartItems, setShoppingCartItems }}
-      >
+    <ShoppingCartContext.Provider
+      value={{ shoppingCartItems, setShoppingCartItems }}
+    >
+      <Appeader />
+      <div className="appContent">
         <h2>Product Items</h2>
         {loading ? (
           <>...Loading Product Items</>
         ) : (
-          <ProductsGrid productsData={productsData} />
+          <ProductGrid productsData={productsData} />
         )}
-        <ShoppingCart />
-      </ShoppingCartContext.Provider>
-    </div>
+      </div>
+    </ShoppingCartContext.Provider>
   );
 }
