@@ -11,8 +11,17 @@ export const ShoppingCart = () => {
 
   const handleClearBasket = () => setShoppingCartItems([]);
 
+  const shoppingCartTotal = () => {
+    return Object.keys(shoppingCartItems).reduce((acc, productId) => {
+      return (
+        acc +
+        shoppingCartItems[productId].price * shoppingCartItems[productId].qty
+      );
+    }, 0);
+  };
+
   return (
-    <div id="shoppingCartPopover" className="shoppingCart" popover="auto">
+    <div id="shoppingCartPopover" className="shoppingCart" popover="manual">
       <button popoverTarget="shoppingCartPopover" popoverTargetAction="hide">
         <IconSquareX />
       </button>
@@ -29,6 +38,7 @@ export const ShoppingCart = () => {
           </div>
         );
       })}
+      <div>Total:{`${shoppingCartTotal()}`}</div>
       <button onClick={onHandleClearBasket}>clear basket</button>
     </div>
   );

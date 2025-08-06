@@ -11,6 +11,7 @@ export interface ProductType {
   category: string;
   availabilityStatus: "In Stock" | "Low Stock";
   qty?: number;
+  price: number;
 }
 
 export interface ProductCardType {

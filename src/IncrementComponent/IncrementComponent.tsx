@@ -34,6 +34,20 @@ export const IncrementComponent = ({
       };
     });
 
+  const handleInputChange = (event) => {
+    const newQuantityValue = event.target.value;
+
+    setShoppingCartItems((prevShoppingCartItems) => {
+      return {
+        ...prevShoppingCartItems,
+        [product.id]: {
+          ...product,
+          qty: +newQuantityValue,
+        },
+      };
+    });
+  };
+
   return (
     <div className="incrementComponent">
       {productQuantity > 0 ? (
@@ -44,7 +58,10 @@ export const IncrementComponent = ({
           >
             <IconShoppingBagMinus />
           </button>
-          <div tabIndex={0}>{productQuantity}</div>
+          <input
+            value={productQuantity}
+            onChange={(event) => handleInputChange(event)}
+          />
           <button
             aria-label={`decrement ${product.title} quantity`}
             onClick={() => handleIncrement(product)}
