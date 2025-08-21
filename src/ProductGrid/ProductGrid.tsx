@@ -1,4 +1,4 @@
-import { useShoppingCartContext } from "../Context";
+import { useShoppingCartContext } from "../ShoppingCartState";
 import { ProductCard } from "../ProductCard";
 import { ProductType } from "../types";
 import "./ProductGrid.css";
@@ -14,7 +14,7 @@ function getCategories(productsData) {
 }
 
 export const ProductGrid = ({ productsData }) => {
-  const { setShoppingCartItems, shoppingCartItems } = useShoppingCartContext();
+  const shoppingCartItems = useShoppingCartContext();
 
   const categories = getCategories(productsData);
   const [filter, setFilter] = useState(null);
@@ -51,7 +51,6 @@ export const ProductGrid = ({ productsData }) => {
           );
         })}
       </div>
-
       <div className="productsContainer">
         {productsData &&
           Object.values(filteredProducts).map((product: ProductType) => {
@@ -62,7 +61,6 @@ export const ProductGrid = ({ productsData }) => {
               <ProductCard
                 key={product.id}
                 product={product}
-                setShoppingCartItems={setShoppingCartItems}
                 productQuantity={productQuantity}
               />
             );

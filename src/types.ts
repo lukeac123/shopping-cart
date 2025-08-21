@@ -1,7 +1,6 @@
-export interface ShoppingCartContextTypes {
-  shoppingCartItems?: ProductType[] | [];
-  setShoppingCartItems?: (product) => void;
-}
+export interface ShoppingCartContextType {}
+
+export interface ShoppingCartReducerType {}
 
 export interface ProductType {
   id: number;
@@ -16,8 +15,7 @@ export interface ProductType {
 
 export interface ProductCardType {
   product: ProductType;
-  setShoppingCartItems: (product) => void;
-  productQuantity: number;
+  productQuantity?: number;
 }
 
 export interface IncrementComponentTypes {

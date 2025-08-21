@@ -1,5 +1,5 @@
 import { IncrementComponentTypes } from "../types";
-import { useShoppingCartContext } from "../Context";
+import { useShoppingCartReducer } from "../ShoppingCartState";
 import { IconShoppingBagPlus, IconShoppingBagMinus } from "@tabler/icons-react";
 import "./IncrementComponent.css";
 
@@ -7,46 +7,7 @@ export const IncrementComponent = ({
   productQuantity,
   product,
 }: IncrementComponentTypes) => {
-  const { setShoppingCartItems } = useShoppingCartContext();
-
-  const handleIncrement = (currentProduct) => {
-    setShoppingCartItems((prevBasketItems) => {
-      return {
-        ...prevBasketItems,
-        [currentProduct.id]: {
-          ...currentProduct,
-          qty: prevBasketItems[currentProduct.id]
-            ? prevBasketItems[currentProduct.id].qty + 1
-            : 1,
-        },
-      };
-    });
-  };
-
-  const handleDelete = (currentProduct) =>
-    setShoppingCartItems((prevBasketItems) => {
-      return {
-        ...prevBasketItems,
-        [currentProduct.id]: {
-          ...currentProduct,
-          qty: prevBasketItems[currentProduct.id].qty - 1,
-        },
-      };
-    });
-
-  const handleInputChange = (event) => {
-    const newQuantityValue = event.target.value;
-
-    setShoppingCartItems((prevShoppingCartItems) => {
-      return {
-        ...prevShoppingCartItems,
-        [product.id]: {
-          ...product,
-          qty: +newQuantityValue,
-        },
-      };
-    });
-  };
+  const dispatch = useShoppingCartReducer();
 
   return (
     <div className="incrementComponent">
@@ -54,17 +15,19 @@ export const IncrementComponent = ({
         <>
           <button
             aria-label={`decrement ${product.title} quantity`}
-            onClick={() => handleDelete(product)}
+            onClick={() => dispatch({ type: "DECREMENT_ITEM", item: product })}
           >
             <IconShoppingBagMinus />
           </button>
           <input
             value={productQuantity}
-            onChange={(event) => handleInputChange(event)}
+            onClick={(event) =>
+              dispatch({ type: "INCREMENT_ITEM", item: product, event: event })
+            }
           />
           <button
             aria-label={`decrement ${product.title} quantity`}
-            onClick={() => handleIncrement(product)}
+            onClick={() => dispatch({ type: "INCREMENT_ITEM", item: product })}
           >
             <IconShoppingBagPlus />
           </button>
@@ -72,7 +35,7 @@ export const IncrementComponent = ({
       ) : (
         <button
           aria-label={`add ${product.title} to shopping cart`}
-          onClick={() => handleIncrement(product)}
+          onClick={() => dispatch({ type: "ADD_TO_BASKET", item: product })}
         >
           Add to Cart
         </button>

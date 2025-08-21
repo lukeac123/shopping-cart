@@ -4,11 +4,7 @@ import { IncrementComponent } from "../IncrementComponent/IncrementComponent";
 import "./ProductCard.css";
 
 export const ProductCard = memo(
-  ({
-    product,
-
-    productQuantity,
-  }: ProductCardType) => {
+  ({ product, productQuantity }: ProductCardType) => {
     const { title, description, thumbnail, category, availabilityStatus } =
       product;
 
