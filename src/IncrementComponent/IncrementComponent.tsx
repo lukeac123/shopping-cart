@@ -11,7 +11,7 @@ export const IncrementComponent = ({
 
   return (
     <div className="incrementComponent">
-      {productQuantity > 0 ? (
+      {productQuantity >= 0 ? (
         <>
           <button
             aria-label={`decrement ${product.title} quantity`}
@@ -20,9 +20,10 @@ export const IncrementComponent = ({
             <IconShoppingBagMinus />
           </button>
           <input
+            type="number"
             value={productQuantity}
-            onClick={(event) =>
-              dispatch({ type: "INCREMENT_ITEM", item: product, event: event })
+            onChange={(event) =>
+              dispatch({ type: "CUSTOM_INPUT", item: product, event: event })
             }
           />
           <button

@@ -1,21 +1,26 @@
-import { useContext, createContext, useReducer } from "react";
 import {
-  ProductType,
-  ShoppingCartContextType,
-  ShoppingCartReducerType,
-} from "./types";
+  useContext,
+  createContext,
+  useReducer,
+  Dispatch,
+  ChangeEvent,
+} from "react";
+import { ProductType, ShoppingCartContextType, ActionTypes } from "./types";
 
-export const ShoppingCartContext = createContext<Object>({});
+export const ShoppingCartContext = createContext<ShoppingCartContextType>({});
 
 export const useShoppingCartContext = () => useContext(ShoppingCartContext);
 
-export const ShoppingCartReducer = createContext<any>({});
+export const ShoppingCartReducer = createContext<Dispatch<ActionTypes>>(null);
 
 export const useShoppingCartReducer = () => useContext(ShoppingCartReducer);
 
-const initialItems: any = {};
+const initialItems: ProductType | {} = {};
 
-const reducer = (shoppingCartItems, action) => {
+const reducer = (
+  shoppingCartItems: ShoppingCartContextType,
+  action: ActionTypes
+) => {
   switch (action.type) {
     case "ADD_TO_BASKET":
       const newItem: ProductType = action.item;
