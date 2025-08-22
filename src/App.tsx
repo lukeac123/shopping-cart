@@ -1,16 +1,13 @@
 import { useState, useEffect } from "react";
-import { ShoppingCartContext } from "./Context";
+import { ShoppingCartStateProvider } from "./ShoppingCartState";
 import { ProductGrid } from "./ProductGrid/ProductGrid";
-import { ShoppingCart } from "./ShoppingCart";
-import { ProductType } from "./types";
 import "./App.css";
-import { Appeader } from "./AppHeader";
+import { AppHeader } from "./AppHeader";
 
-//TODO: Redux or Zustand to manage state
-//TODO: Add search or filtering
+//TODO: Add testing
+//TODO: Would Zustand work better ?
 
 export default function App() {
-  const [shoppingCartItems, setShoppingCartItems] = useState<ProductType[]>([]);
   const [productsData, setProductsData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -25,7 +22,7 @@ export default function App() {
         const data = await response.json();
         setProductsData(data);
       } catch {
-        setError(error);
+        setError(error?.message);
       } finally {
         setLoading(false);
       }
@@ -33,21 +30,19 @@ export default function App() {
     getData();
   }, []);
 
-  if (error) return <>{error}</>;
+  if (error) return <>{error?.message}</>;
 
   return (
-    <ShoppingCartContext.Provider
-      value={{ shoppingCartItems, setShoppingCartItems }}
-    >
-      <Appeader />
+    <ShoppingCartStateProvider>
+      <AppHeader />
       <div className="appContent">
         <h2>Product Items</h2>
-        {loading ? (
+        {loading && !productsData ? (
           <>...Loading Product Items</>
         ) : (
           <ProductGrid productsData={productsData} />
         )}
       </div>
-    </ShoppingCartContext.Provider>
+    </ShoppingCartStateProvider>
   );
 }
