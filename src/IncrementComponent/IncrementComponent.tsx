@@ -27,7 +27,7 @@ export const IncrementComponent = ({
             }
           />
           <button
-            aria-label={`decrement ${product.title} quantity`}
+            aria-label={`increment ${product.title} quantity`}
             onClick={() => dispatch({ type: "INCREMENT_ITEM", item: product })}
           >
             <IconShoppingBagPlus />

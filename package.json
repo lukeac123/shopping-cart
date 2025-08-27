@@ -21,8 +21,9 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "playwright test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "test": "playwright test -c playwright-ct.config.ts",
+    "test-ui": "npx playwright test --ui -c playwright-ct.config.ts"
   },
   "eslintConfig": {
     "extends": [
@@ -43,6 +44,6 @@
     ]
   },
   "devDependencies": {
-    "@playwright/test": "^1.55.0"
+    "@playwright/experimental-ct-react": "^1.55.0"
   }
 }
