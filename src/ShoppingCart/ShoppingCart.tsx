@@ -24,7 +24,11 @@ export const ShoppingCart = () => {
 
   return (
     <>
-      <button popoverTarget="shoppingCartPopover" className="shoppingCartIcon">
+      <button
+        aria-label="shopping cart popover"
+        popoverTarget="shoppingCartPopover"
+        className="shoppingCartIcon"
+      >
         <IconShoppingBag />
       </button>
       <div id="shoppingCartPopover" className="shoppingCart" popover="manual">

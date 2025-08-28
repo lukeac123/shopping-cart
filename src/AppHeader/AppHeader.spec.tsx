@@ -1,8 +1,8 @@
 import { test, expect } from "@playwright/experimental-ct-react";
-import { AppHeaderTest } from "./AppHeader.story";
+import { AppHeader } from "./Appheader";
 
 test("Renders the Component", async ({ mount }) => {
-  const component = await mount(<AppHeaderTest />);
+  const component = await mount(<AppHeader />);
 
   await expect(component).toContainText("Eccomerce Product Page");
 });
