@@ -1,10 +1,6 @@
 import { test as baseTest } from "@playwright/experimental-ct-react";
 import AxeBuilder from "@axe-core/playwright";
 
-type AxeFixture = {
-  makeAxeBuilder: () => AxeBuilder;
-};
-
 // Extend the base test to include `toHaveNoAccessibilityIssues`
 export const test = baseTest.extend<{
   expectAccessible: (page: import("@playwright/test").Page) => Promise<void>;

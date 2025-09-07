@@ -14,7 +14,7 @@ export const IncrementComponent = ({
       {productQuantity >= 0 ? (
         <>
           <button
-            aria-label={`decrement quantity`}
+            aria-label="decrement quantity"
             onClick={() => dispatch({ type: "DECREMENT_ITEM", item: product })}
           >
             <IconShoppingBagMinus />

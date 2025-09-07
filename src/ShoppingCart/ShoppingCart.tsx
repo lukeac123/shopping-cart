@@ -29,7 +29,7 @@ export const ShoppingCart = () => {
         popoverTarget="shoppingCartPopover"
         className="shoppingCartIcon"
       >
-        <IconShoppingBag />
+        <IconShoppingBag aria-hidden />
       </button>
       <div
         aria-label="shoppingCartPopver"
