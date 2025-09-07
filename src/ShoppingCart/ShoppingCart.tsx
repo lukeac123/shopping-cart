@@ -24,12 +24,25 @@ export const ShoppingCart = () => {
 
   return (
     <>
-      <button popoverTarget="shoppingCartPopover" className="shoppingCartIcon">
-        <IconShoppingBag />
+      <button
+        aria-label="shopping cart popover trigger"
+        popoverTarget="shoppingCartPopover"
+        className="shoppingCartIcon"
+      >
+        <IconShoppingBag aria-hidden />
       </button>
-      <div id="shoppingCartPopover" className="shoppingCart" popover="manual">
-        <button popoverTarget="shoppingCartPopover" popoverTargetAction="hide">
-          <IconSquareX />
+      <div
+        aria-label="shoppingCartPopver"
+        id="shoppingCartPopover"
+        className="shoppingCart"
+        popover="manual"
+      >
+        <button
+          aria-label="shopping cart close button"
+          popoverTarget="shoppingCartPopover"
+          popoverTargetAction="hide"
+        >
+          <IconSquareX aria-hidden />
         </button>
         <h2>Shopping Cart</h2>
         {Object.values(shoppingCartItems).map((product: ProductType) => {

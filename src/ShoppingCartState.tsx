@@ -1,10 +1,4 @@
-import {
-  useContext,
-  createContext,
-  useReducer,
-  Dispatch,
-  ChangeEvent,
-} from "react";
+import { useContext, createContext, useReducer, Dispatch } from "react";
 import { ProductType, ShoppingCartContextType, ActionTypes } from "./types";
 
 export const ShoppingCartContext = createContext<ShoppingCartContextType>({});

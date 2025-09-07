@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@axe-core/playwright": "^4.10.2",
+    "@playwright/test": "^1.55.0",
     "@tabler/icons-react": "^3.34.1",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.6.4",
@@ -21,8 +23,10 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "test": "playwright test",
+    "test-component": "playwright test -c playwright-ct.config.ts",
+    "test-component-ui": "npx playwright test --ui -c playwright-ct.config.ts"
   },
   "eslintConfig": {
     "extends": [
@@ -41,5 +45,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@playwright/experimental-ct-react": "^1.55.0"
   }
 }

@@ -4,9 +4,6 @@ import { ProductGrid } from "./ProductGrid/ProductGrid";
 import "./App.css";
 import { AppHeader } from "./AppHeader";
 
-//TODO: Add testing
-//TODO: Would Zustand work better ?
-
 export default function App() {
   const [productsData, setProductsData] = useState(null);
   const [loading, setLoading] = useState(true);
