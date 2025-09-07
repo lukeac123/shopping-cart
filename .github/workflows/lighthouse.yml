@@ -9,6 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+      - name: Install dependencies
+        run: yarn
+      - name: Start App
+        run: yarn dev
       - name: Audit URLs using Lighthouse
         uses: treosh/lighthouse-ci-action@v12
         with:
