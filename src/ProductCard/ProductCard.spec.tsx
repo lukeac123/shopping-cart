@@ -1,4 +1,5 @@
-import { test, expect } from "@playwright/experimental-ct-react";
+import { test, expect } from "../../playwright/accessibilityTest";
+import AxeBuilder from "@axe-core/playwright";
 import { ProductCard } from "./ProductCard";
 import { ProductType } from "../types";
 
@@ -22,4 +23,13 @@ test("Renders the Component", async ({ mount }) => {
 
   await expect(heading).toBeVisible();
   await expect(image).toBeVisible();
+});
+
+test("Accessibility", async ({ page, mount }) => {
+  await mount(<ProductCard product={mockProduct} productQuantity={1} />);
+  const accessibilityScanResults = await new AxeBuilder({
+    page: page,
+  }).analyze();
+
+  expect(accessibilityScanResults.violations).toEqual([]);
 });

@@ -1,4 +1,5 @@
-import { test, expect } from "@playwright/experimental-ct-react";
+import { test, expect } from "../../playwright/accessibilityTest";
+import AxeBuilder from "@axe-core/playwright";
 import { ShoppingCart } from "./ShoppingCart";
 
 test("Popover Trigger + classes applied", async ({ mount }) => {
