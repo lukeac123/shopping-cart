@@ -15,7 +15,7 @@ jobs:
       - name: Install dependencies
         run: yarn
       - name: Start App
-        run: yarn dev
+        run: yarn start
       - name: Audit URLs using Lighthouse
         uses: treosh/lighthouse-ci-action@v12
         with:
