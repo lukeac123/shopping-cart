@@ -24,6 +24,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "eject": "react-scripts eject",
+    "test-jest": "react-scripts test",
     "test": "playwright test",
     "test-component": "playwright test -c playwright-ct.config.ts",
     "test-component-ui": "npx playwright test --ui -c playwright-ct.config.ts"
@@ -32,6 +33,12 @@
     "extends": [
       "react-app",
       "react-app/jest"
+    ]
+  },
+  "jest": {
+    "testMatch": [
+      "<rootDir>/src/**/*.test.ts",
+      "<rootDir>/src/**/*.test.tsx"
     ]
   },
   "browserslist": {

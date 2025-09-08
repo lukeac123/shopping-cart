@@ -11,7 +11,7 @@ export const useShoppingCartReducer = () => useContext(ShoppingCartReducer);
 
 const initialItems: ProductType | {} = {};
 
-const reducer = (
+export const reducer = (
   shoppingCartItems: ShoppingCartContextType,
   action: ActionTypes
 ) => {

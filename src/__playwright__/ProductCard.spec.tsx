@@ -1,6 +1,6 @@
 import { test, expect } from "../../playwright/accessibilityTest";
 import AxeBuilder from "@axe-core/playwright";
-import { ProductCard } from "./ProductCard";
+import { ProductCard } from "../ProductCard/ProductCard";
 import { ProductType } from "../types";
 
 const mockProduct: ProductType = {

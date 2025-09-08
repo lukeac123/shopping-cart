@@ -1,5 +1,5 @@
 import { test, expect } from "@playwright/experimental-ct-react";
-import { AppHeader } from "./Appheader";
+import { AppHeader } from "../AppHeader/Appheader";
 
 test("Renders the Component", async ({ mount }) => {
   const component = await mount(<AppHeader />);
