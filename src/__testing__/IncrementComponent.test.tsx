@@ -1,5 +1,5 @@
+import { render, screen, fireEvent } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { render, screen } from "@testing-library/react";
 import { IncrementComponent } from "../IncrementComponent";
 import { ProductType } from "../types";
 
@@ -13,19 +13,59 @@ const mockProduct: ProductType = {
   price: 10.99,
 };
 
-test("loads and displays greeting", async () => {});
+const mockDispatch = jest.fn();
+jest.mock("../ShoppingCartState", () => ({
+  useShoppingCartReducer: () => mockDispatch,
+}));
 
-// test("loads and displays greeting", async () => {
-//   // ARRANGE
-//   render(<IncrementComponent product={mockProduct} productQuantity={1} />);
+describe("IncrementComponent", () => {
+  beforeEach(() => {
+    mockDispatch.mockClear();
+  });
+  it("calls dispatch with DECREMENT_ITEM when decrement button clicked", () => {
+    render(<IncrementComponent productQuantity={2} product={mockProduct} />);
 
-//   // ACT
-//   await userEvent.click(
-//     screen.getByRole("button", { name: "decrement quantity" })
-//   );
-//   await screen.findByRole("heading");
+    fireEvent.click(screen.getByRole("button", { name: "decrement quantity" }));
 
-//   // ASSERT
-//   // expect(screen.getByRole("heading")).toHaveTextContent("hello there");
-//   // expect(screen.getByRole("button")).toBeDisabled();
-// });
+    expect(mockDispatch).toHaveBeenCalledWith({
+      type: "DECREMENT_ITEM",
+      item: mockProduct,
+    });
+  });
+
+  it("calls dispatch with INCREMENT_ITEM when increment button clicked", () => {
+    render(<IncrementComponent productQuantity={2} product={mockProduct} />);
+
+    fireEvent.click(screen.getByRole("button", { name: "increment quantity" }));
+
+    expect(mockDispatch).toHaveBeenCalledWith({
+      type: "INCREMENT_ITEM",
+      item: mockProduct,
+    });
+  });
+
+  it("calls dispatch with ADD_TO_BASKET when add to basket button clicked", () => {
+    render(
+      <IncrementComponent productQuantity={undefined} product={mockProduct} />
+    );
+
+    fireEvent.click(screen.getByRole("button", { name: "add to cart" }));
+
+    expect(mockDispatch).toHaveBeenCalledWith({
+      type: "ADD_TO_BASKET",
+      item: mockProduct,
+    });
+  });
+
+  it("calls dispatch with CUSTOM_INPUT when custom value inputted", () => {
+    render(<IncrementComponent productQuantity={2} product={mockProduct} />);
+
+    userEvent.type(screen.getByLabelText("product quantity"), "10");
+
+    expect(mockDispatch).toHaveBeenCalledTimes(2);
+    // expect(mockDispatch).toHaveBeenCalledWith({
+    //   type: "CUSTOM_INPUT",
+    //   item: mockProduct,
+    // });
+  });
+});
