@@ -52,7 +52,7 @@ export const ShoppingCart = () => {
             <div key={id}>
               <h2>{title}</h2>
               <div>{description}</div>
-              <img src={thumbnail} />
+              <img src={thumbnail} alt={title} />
               <IncrementComponent product={product} productQuantity={qty} />
             </div>
           );

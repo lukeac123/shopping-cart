@@ -25,7 +25,7 @@ export default function App() {
       }
     }
     getData();
-  }, []);
+  }, [productsData, error]);
 
   if (error) return <>{error?.message}</>;
 
