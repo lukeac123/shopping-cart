@@ -4,33 +4,26 @@ import { ProductType } from "../types";
 import "./ProductGrid.css";
 import { useState } from "react";
 
-function getCategories(productsData) {
+function getCategories(products) {
   let productCategories = [];
-  Object.values(productsData.products).forEach((product: ProductType) => {
+  Object.values(products).forEach((product: ProductType) => {
     if (productCategories.includes(product.category)) return;
     productCategories.push(product.category);
   });
   return productCategories;
 }
 
-export const ProductGrid = ({ productsData }) => {
+export const ProductGrid = ({ products }) => {
   const shoppingCartItems = useShoppingCartContext();
-
-  const categories = getCategories(productsData);
+  const categories = getCategories(products);
   const [filter, setFilter] = useState(null);
-  const [filteredProducts, setFilteredProducts] = useState(
-    productsData.products
-  );
 
-  const handleFilterChange = (event) => {
-    const filterCategory = event.target.value;
-    setFilter(event.target.value);
+  function filterProducts() {
+    if (!filter) return products;
+    return products.filter((product) => product.category === filter);
+  }
 
-    const productData = productsData.products.filter(
-      (product) => product.category === filterCategory
-    );
-    setFilteredProducts(productData);
-  };
+  const filteredProducts = filterProducts();
 
   return (
     <>
@@ -44,27 +37,26 @@ export const ProductGrid = ({ productsData }) => {
                 value={category}
                 type="checkbox"
                 checked={filter === category}
-                onChange={(event) => handleFilterChange(event)}
+                onChange={(event) => setFilter(event.target.value)}
               />
               <label htmlFor={category}>{category}</label>
             </div>
           );
         })}
+        <button onClick={() => setFilter(null)}>Reset</button>
       </div>
       <div className="productsContainer">
-        {productsData &&
-          Object.values(filteredProducts).map((product: ProductType) => {
-            const productQuantity =
-              shoppingCartItems[product.id] &&
-              shoppingCartItems[product.id].qty;
-            return (
-              <ProductCard
-                key={product.id}
-                product={product}
-                productQuantity={productQuantity}
-              />
-            );
-          })}
+        {filteredProducts.map((product: ProductType) => {
+          const productQuantity =
+            shoppingCartItems[product.id] && shoppingCartItems[product.id].qty;
+          return (
+            <ProductCard
+              key={product.id}
+              product={product}
+              productQuantity={productQuantity}
+            />
+          );
+        })}
       </div>
     </>
   );
