@@ -1,35 +1,54 @@
 import { useShoppingCartContext } from "../ShoppingCartState";
 import { ProductCard } from "../ProductCard";
+import { Pagination } from "../Pagination";
 import { ProductType } from "../types";
+import { useState, useCallback, useEffect } from "react";
+import { getCategories, filterProducts } from "../utils";
 import "./ProductGrid.css";
-import { useState } from "react";
 
-function getCategories(productsData) {
-  let productCategories = [];
-  Object.values(productsData.products).forEach((product: ProductType) => {
-    if (productCategories.includes(product.category)) return;
-    productCategories.push(product.category);
-  });
-  return productCategories;
-}
-
-export const ProductGrid = ({ productsData }) => {
+export const ProductGrid = () => {
+  const [products, setProducts] = useState([]);
   const shoppingCartItems = useShoppingCartContext();
-
-  const categories = getCategories(productsData);
   const [filter, setFilter] = useState(null);
-  const [filteredProducts, setFilteredProducts] = useState(
-    productsData.products
-  );
+  const [error, setError] = useState(null);
+  const [page, setPage] = useState(0);
+  const itemsPerPage = 5;
 
-  const handleFilterChange = (event) => {
-    const filterCategory = event.target.value;
-    setFilter(event.target.value);
+  const getData = useCallback(async () => {
+    try {
+      const response = await fetch(
+        `https://dummyjson.com/products?limit=${itemsPerPage}&skip=${
+          page * itemsPerPage
+        }`
+      );
+      if (!response.ok) {
+        console.error(`Response is not valid ${response.status}`);
+        setError(`Response is not valid ${response.status}`);
+      }
+      const data = await response.json();
+      setProducts(data.products);
+    } catch (error) {
+      console.error(error.message);
+      setError(error.message);
+    }
+  }, [page, itemsPerPage]);
 
-    const productData = productsData.products.filter(
-      (product) => product.category === filterCategory
-    );
-    setFilteredProducts(productData);
+  useEffect(() => {
+    getData();
+  }, [getData]);
+
+  if (error) return <div>{error.toString()}</div>;
+  if (!products) return;
+
+  const categories = getCategories(products);
+
+  const filteredProducts = filterProducts(products, filter);
+
+  const paginationChange = (pageChange: "increment" | "decrement") => {
+    if (page === 0 && pageChange === "decrement") return;
+    setPage((prev) => {
+      return pageChange === "increment" ? prev + 1 : prev - 1;
+    });
   };
 
   return (
@@ -44,16 +63,17 @@ export const ProductGrid = ({ productsData }) => {
                 value={category}
                 type="checkbox"
                 checked={filter === category}
-                onChange={(event) => handleFilterChange(event)}
+                onChange={(event) => setFilter(event.target.value)}
               />
               <label htmlFor={category}>{category}</label>
             </div>
           );
         })}
+        <button onClick={() => setFilter(null)}>Reset</button>
       </div>
       <div className="productsContainer">
-        {productsData &&
-          Object.values(filteredProducts).map((product: ProductType) => {
+        {filterProducts &&
+          filteredProducts.map((product: ProductType) => {
             const productQuantity =
               shoppingCartItems[product.id] &&
               shoppingCartItems[product.id].qty;
@@ -66,6 +86,12 @@ export const ProductGrid = ({ productsData }) => {
             );
           })}
       </div>
+      <Pagination
+        itemsPerPage={itemsPerPage}
+        url={"https://dummyjson.com/products"}
+        onPaginationChange={paginationChange}
+        page={page}
+      />
     </>
   );
 };
