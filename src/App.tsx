@@ -23,13 +23,11 @@ export default function App() {
       <div className="appContent">
         <h2>Product Items</h2>
 
-          <ErrorBoundary FallbackComponent={Fallback}>
-             <Suspense fallback={<>...Loading Product Items</>}>
-            <ProductGrid productsData={productsData} />
-                              </Suspense>
-          </ErrorBoundary>
-        )}
-
+        <ErrorBoundary FallbackComponent={Fallback}>
+          <Suspense fallback={<>...Loading Product Items</>}>
+            <ProductGrid />
+          </Suspense>
+        </ErrorBoundary>
       </div>
     </ShoppingCartStateProvider>
   );
