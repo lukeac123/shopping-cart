@@ -22,7 +22,6 @@ export default function App() {
       <AppHeader />
       <div className="appContent">
         <h2>Product Items</h2>
-
         <ErrorBoundary FallbackComponent={Fallback}>
           <Suspense fallback={<>...Loading Product Items</>}>
             <ProductGrid />
