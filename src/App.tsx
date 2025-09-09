@@ -1,8 +1,19 @@
 import { useState, useEffect } from "react";
 import { ShoppingCartStateProvider } from "./ShoppingCartState";
 import { ProductGrid } from "./ProductGrid/ProductGrid";
-import "./App.css";
 import { AppHeader } from "./AppHeader";
+import { ErrorBoundary } from "react-error-boundary";
+import "./App.css";
+
+function Fallback({ error, resetErrorBoundary }) {
+  resetErrorBoundary();
+
+  return (
+    <div role="alert">
+      <p>Something went wrong: {error.message}</p>
+    </div>
+  );
+}
 
 export default function App() {
   const [productsData, setProductsData] = useState(null);
@@ -37,7 +48,9 @@ export default function App() {
         {loading && !productsData ? (
           <>...Loading Product Items</>
         ) : (
-          <ProductGrid productsData={productsData} />
+          <ErrorBoundary FallbackComponent={Fallback}>
+            <ProductGrid productsData={productsData} />
+          </ErrorBoundary>
         )}
       </div>
     </ShoppingCartStateProvider>
